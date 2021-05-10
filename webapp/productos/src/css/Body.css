@@ -1,0 +1,30 @@
+.body-bg {
+    background-image: url("../images/bodyb.mp4");
+    height: 450px;
+    background-attachment: fixed 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    align-items: center;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background-position: center;
+}
+
+.intro-section {
+    text-align: center;
+    color: rgb(238, 204, 13);
+}
+
+.body-text {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 500%;
+    letter-spacing: 4px;
+    -webkit-text-stroke-color: #000;
+}
+
+@media screen and (max-width: 960px) {
+    .body-bg {
+        background-size: contain;
+    }
+}

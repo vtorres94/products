@@ -1,24 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import  Header  from './layout/Header';
+import Body from './layout/Body';
+import 'semantic-ui-css/semantic.min.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Axios from 'axios';
+
+Axios.interceptors.request.use(function(config) {
+  config.url = `${process.env.REACT_APP_API_BASE_URL}${config.url}`;
+  return config;
+})
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Body}/>
+        <Route exact path="/login" component={Body}/>
+        <Route exact path="/register" component={Body}/>
+        <Route exact path="/products" component={Body}/>
+      </Switch>
+    </Router>
   );
 }
 
