@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { Input, Segment, Item, Image, Header } from 'semantic-ui-react'
+import { Input, Segment, Item, Button, Header } from 'semantic-ui-react'
 import { useUser, useFirebaseApp } from 'reactfire';
+import { useHistory } from 'react-router-dom';
 import IProducto from './../../model/product.model';
+
 interface IProductsProps {}
 
 interface IProductsState {
-  productsList: IProducto[],
-  product: IProducto
+  productFilter: string
 }
-const Products = (props: IProductsProps) => {
+const Products = (props?: IProductsProps) => {
 
+  const history = useHistory();
     const user = useUser();
     const [state, setState] = useState<IProductsState>({
-      productsList: [],
-      product: {}
+      productFilter: ''
     })
 
     const [productsList, setProductsList] = useState<IProducto[]>();
@@ -24,7 +25,6 @@ const Products = (props: IProductsProps) => {
     }, []);
 
     const getProducts = async() => {
-      await setState({ ...state, productsList: []})
       const dbRef = firebase.database().ref("products");
       await dbRef.on('value', (snapshot) => {
         const prod = snapshot.val();
@@ -44,14 +44,17 @@ const Products = (props: IProductsProps) => {
 
     return (
       <Segment textAlign="center">
-        <Input placeholder="Search" />
+        <Input placeholder="Search" value={state.productFilter} onChange={event => setState({ productFilter: event.target.value })}/>
         <Header>
           <Header.Content>Products</Header.Content>
           <Header.Subheader>{user.data ? user.data.email : 'No ha iniciado sesión'}</Header.Subheader>
         </Header>
+        <Button circular icon="plus" color="facebook" hint="create" onClick={() => history.push("/products/new")}></Button>
         <Segment className={"products-container"}>
           <Item.Group divided>
-            {productsList ? productsList.map(products => {
+            {productsList ? productsList
+            .filter(f => state.productFilter !== '' ? f.product?.includes(state.productFilter) ? f : null : f)
+            .map(products => {
               return (
             <Item size="tiny">
               <Item.Image size="tiny" src={'data:image/jpeg;base64,'+products?.imageBase64} />
