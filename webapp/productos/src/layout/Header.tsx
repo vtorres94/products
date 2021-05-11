@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Segment } from 'semantic-ui-react';
 import '../css/Navbar.css';
-import { Button } from 'semantic-ui-react';
+import { Button, Icon, Header as HeaderS } from 'semantic-ui-react';
+import { useUser, useFirebaseApp } from 'reactfire';
+import 'firebase/auth';
+import { Link } from 'react-router-dom';
 
 export interface IHeaderProps {
 
 }
 
 const Header = (props: IHeaderProps) => {
+    const user = useUser();
+    const firebase = useFirebaseApp();
+
     const [
         state, setState 
     ] = useState({
@@ -18,13 +24,24 @@ const Header = (props: IHeaderProps) => {
         setState({clicked: !state.clicked })
     }
 
+    const logout = async() => {
+        await firebase.auth().signOut().then(() => {
+            // Sign-out successful.
+            console.log("Se cerró la sesión")
+            window.location.href='/'
+        }).catch((error) => {
+            console.log(error)
+            // An error happened.
+        });
+          
+    }
     return (
         <nav className="NavbarItems" style={{
             background: '#2ACFFF',
             height: '100px',
             width: '100%'
         }}>
-            <h1 className="navbar-logo">Products<i className="arlogo fab fa-wolf-pack-battalion"></i></h1>
+            <HeaderS className="navbar-logo" onClick={() => window.location.href="/"}>Products<Icon name="product hunt"></Icon></HeaderS>
             
             <ul className={state.clicked ? "nav-menu active" : "nav-menu"}>
                 <li className="nav-links"><a>Productos</a></li>
@@ -32,9 +49,23 @@ const Header = (props: IHeaderProps) => {
             <div className="menu-icon" onClick={handleClick}>
                 <i className={state.clicked ? "fas fa-times" : "fas fa-bars"}></i>
             </div>
-            <Button className="nav-links-mobile" color="black">Log in</Button>
-
-            
+            {!user.data ?
+            <Button
+                className="nav-links-mobile"
+                color="black"
+                onClick={() => window.location.href='/login'}
+            >
+                LogIn
+            </Button>
+            :
+            <Button
+                className="nav-links-mobile"
+                color="black"
+                onClick={logout}
+            >
+                LogOut
+            </Button>
+            }
         </nav>
     )
 }
