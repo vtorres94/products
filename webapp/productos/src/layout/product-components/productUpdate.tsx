@@ -139,7 +139,13 @@ const ProductUpdate = (props: IProductUpdateProps) => {
   };
 
   return (
-    <Modal open size="tiny">
+    <Modal 
+      open 
+      size="tiny"
+      closeOnEscape
+      closeOnDimmerClick
+      closeOnTriggerBlur
+    >
       <Segment textAlign="center">
         <Header dividing>
           <Header.Content>

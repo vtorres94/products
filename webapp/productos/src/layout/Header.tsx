@@ -43,14 +43,21 @@ const Header = (props: IHeaderProps) => {
             <HeaderS className="navbar-logo" onClick={() => window.location.href="/"}>Products<Icon name="product hunt"></Icon></HeaderS>
             
             <ul className={state.clicked ? "nav-menu active" : "nav-menu"}>
+                {user.data ?
                 <li className="nav-links"><a href="/">Productos</a></li>
+                :null}
+                {!user.data ?
+                <li className="nav-links logs"><a href="/login">LogIn</a></li>
+                :
+                <li className="nav-links logs" onClick={logout}><a href="/">LogOut</a></li>
+                }
             </ul>
             <div className="menu-icon" onClick={handleClick}>
                 <i className={state.clicked ? "fas fa-times" : "fas fa-bars"}></i>
             </div>
             {!user.data ?
             <Button
-                className="nav-links-mobile"
+                className="log-button"
                 color="black"
                 onClick={() => window.location.href='/login'}
             >
@@ -58,7 +65,7 @@ const Header = (props: IHeaderProps) => {
             </Button>
             :
             <Button
-                className="nav-links-mobile"
+                className="log-button"
                 color="black"
                 onClick={logout}
             >

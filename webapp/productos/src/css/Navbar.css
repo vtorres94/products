@@ -24,13 +24,15 @@
     list-style: none;
     width: 70vw;
     justify-content: center;
+    background-color: #2ACFFF;
 }
 
 .nav-links {
-    color: white;
+    background-color: #2ACFFF;
     text-decoration: none;
     padding: 0.5rem 1rem;
     margin-left: 0px;
+    color: white;
 }
 
 .nav-links:hover {
@@ -43,12 +45,19 @@
     color: black;
 }
 
-.nav-links-mobile {
+.menu-icon {
     display: none;
 }
 
-.menu-icon {
+.logs {
     display: none;
+}
+
+.log-button {
+    display: flex;
+    justify-content: center!important;
+    align-items: center;
+    font-size: 1.2rem; 
 }
 
 @media screen and (max-width: 960px) {
@@ -58,6 +67,10 @@
 
     .nav-menu {
         display: none;
+    }
+
+    .logs {
+        display: contents;
     }
 
     .nav-menu.active {
@@ -81,9 +94,9 @@
     }
 
     .nav-links:hover {
-        background-color: white;
+        background-color: #2ACFFF;
         border-radius: 0;
-        color: #2ACFFF;
+        color: white!important;
     }
 
     .navbar-logo {
@@ -103,4 +116,10 @@
         font-size: 1.8rem;
         cursor: pointer;
     }
+
+    .log-button {
+        display: none!important;
+    }
+
+    
 }

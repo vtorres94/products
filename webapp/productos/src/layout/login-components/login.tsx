@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Modal, Segment, Header, Input, Button, Grid, Icon } from 'semantic-ui-react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useFirebaseApp, useUser } from 'reactfire';
 import 'firebase/auth';
+import { useEffect } from 'react';
 
-interface ILoginProps extends RouteComponentProps<{ url: string }>{}
+interface ILoginProps{}
 
 interface ILoginState {
     email: string,
@@ -15,17 +16,23 @@ const Login = (props: ILoginProps) => {
 
     const firebase = useFirebaseApp();
     const user = useUser();
+    const history = useHistory();
 
     const [state, setState] = useState<ILoginState>({
         email: '',
         password: ''
     })
 
+    useEffect(() => {
+        if(user.data) {
+            history.push('/')
+        }
+    }, [user])
+
     const login = async() => {
         firebase.auth().signInWithEmailAndPassword(state.email, state.password)
             .then(() => {
                 console.log("Se inicio sesion: " + user.data.email);
-                window.location.href='/'
             })
             .catch((error) => {
                 console.log("Falló al iniciar sesión "+ error );
@@ -37,7 +44,7 @@ const Login = (props: ILoginProps) => {
         <Modal 
             textAllign="center" 
             closeIcon
-            onClose={() => props.history.push("/")}
+            onClose={() => history.push("/")}
             open={!user.data}
             size="tiny"
         >
@@ -64,7 +71,7 @@ const Login = (props: ILoginProps) => {
                     </Grid.Row>
                     <Grid.Row>
                         <Grid.Column>
-                            <Button color="facebook" onClick={() => props.history.push("/register")}>Register</Button>
+                            <Button color="facebook" onClick={() => history.push("/register")}>Register</Button>
                             <Button color="green" onClick={login}>Log in</Button>
                         </Grid.Column>
                     </Grid.Row>

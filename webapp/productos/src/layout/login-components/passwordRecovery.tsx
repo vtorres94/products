@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Modal, Segment, Header, Input, Button, Grid, Icon } from 'semantic-ui-react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useFirebaseApp, useUser } from 'reactfire';
 import 'firebase/auth';
 
-interface IPasswordRecoveryProps extends RouteComponentProps<{ url: string }>{}
+interface IPasswordRecoveryProps {}
 
 interface IPasswordRecoveryState {
     email: string
@@ -14,6 +14,7 @@ const PasswordRecovery = (props: IPasswordRecoveryProps) => {
 
     const firebase = useFirebaseApp();
     const user = useUser();
+    const history = useHistory();
 
     const [state, setState] = useState<IPasswordRecoveryState>({
         email: ''
@@ -22,10 +23,10 @@ const PasswordRecovery = (props: IPasswordRecoveryProps) => {
     const recovery = async() => {
         await firebase.auth().sendPasswordResetEmail(state.email)
             .then(() => {
-                
+                history.push('/')
             })
             .catch((error) => {
-
+                console.log(error)
             })
     }
 
@@ -34,7 +35,7 @@ const PasswordRecovery = (props: IPasswordRecoveryProps) => {
         <Modal 
             textAllign="center" 
             closeIcon
-            onClose={() => props.history.push("/")}
+            onClose={() => history.push("/")}
             open={!user.data}
         >
             <Modal.Header>Products <Icon name="product hunt"/></Modal.Header>
@@ -55,7 +56,7 @@ const PasswordRecovery = (props: IPasswordRecoveryProps) => {
                     </Grid.Row>
                     <Grid.Row>
                         <Grid.Column>
-                            <Button color="facebook" onClick={() => props.history.push("/register")}>Register</Button>
+                            <Button color="facebook" onClick={() => history.push("/register")}>Register</Button>
                             <Button color="green" onClick={recovery}>Send email</Button>
                         </Grid.Column>
                     </Grid.Row>
