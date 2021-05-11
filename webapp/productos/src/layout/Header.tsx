@@ -1,10 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Segment } from 'semantic-ui-react';
+import React, { useState } from 'react';
 import '../css/Navbar.css';
 import { Button, Icon, Header as HeaderS } from 'semantic-ui-react';
 import { useUser, useFirebaseApp } from 'reactfire';
 import 'firebase/auth';
-import { Link } from 'react-router-dom';
 
 export interface IHeaderProps {
 
@@ -25,6 +23,7 @@ const Header = (props: IHeaderProps) => {
     }
 
     const logout = async() => {
+        
         await firebase.auth().signOut().then(() => {
             // Sign-out successful.
             console.log("Se cerró la sesión")
@@ -44,7 +43,7 @@ const Header = (props: IHeaderProps) => {
             <HeaderS className="navbar-logo" onClick={() => window.location.href="/"}>Products<Icon name="product hunt"></Icon></HeaderS>
             
             <ul className={state.clicked ? "nav-menu active" : "nav-menu"}>
-                <li className="nav-links"><a>Productos</a></li>
+                <li className="nav-links"><a href="/">Productos</a></li>
             </ul>
             <div className="menu-icon" onClick={handleClick}>
                 <i className={state.clicked ? "fas fa-times" : "fas fa-bars"}></i>

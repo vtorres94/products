@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Modal, Segment, Header, Input, Button, Grid, Icon } from 'semantic-ui-react';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import { useFirebaseApp, useUser } from 'reactfire';
 import 'firebase/auth';
 
@@ -39,6 +39,7 @@ const Login = (props: ILoginProps) => {
             closeIcon
             onClose={() => props.history.push("/")}
             open={!user.data}
+            size="tiny"
         >
             <Modal.Header>Products <Icon name="product hunt"/></Modal.Header>
             <Segment textAlign="center">

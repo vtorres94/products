@@ -29,8 +29,8 @@ const Register = (props: IRegisterProps) => {
     const validateFields = () => {
         setState({
             ...state,
-            validEmail: state.email != '' ? true : false,
-            validPassword: state.password != '' && state.password.length >6 ? true : false,
+            validEmail: state.email !== '' ? true : false,
+            validPassword: state.password !== '' && state.password.length >6 ? true : false,
             validConfirmPassword: state.password === state.confirmPassword ? true : false 
         })
     }
