@@ -5,6 +5,7 @@ import Login from './login-components/login';
 import Register from './login-components/register';
 import PasswordRecovery from './login-components/passwordRecovery';
 import ProductUpdate from './product-components/productUpdate';
+import ProductDelete from './product-components/productDelete';
 
 interface IRoutesProps {}
 
@@ -19,6 +20,7 @@ const Routes = (props: IRoutesProps) => {
             <Route exact path="/products" component={Body}/>
             <Route exact path="/products/new" component={ProductUpdate}/>
             <Route exact path="/products/:id/edit" component={ProductUpdate}/>
+            <Route exact path="/products/:id/:product/delete" component={ProductDelete}/>
             </Switch>
       </Router>
     );

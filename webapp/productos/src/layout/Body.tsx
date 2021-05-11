@@ -1,5 +1,5 @@
 import React from 'react'
-import Products from './product-components/Products';
+import Products from './product-components/products';
 import '../css/Body.css';
 import { RouteComponentProps } from 'react-router-dom';
 
